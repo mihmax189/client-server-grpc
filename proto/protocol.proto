@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package protocol;
+
+enum Commands {
+  ADD_WORKER = 0;
+  SHOW_WORKERS = 1;
+  SHOW_POST = 2;
+  SHOW_HEAD = 3;
+  SET_POST = 4;
+  SET_HEAD = 5;
+  DEL_WORKER = 6;
+}
+
+service DatabaseService {
+    // Function invoked to send the request
+    rpc sendRequest (Request) returns (Responce) {}
+}
+
+message Request {
+    Commands command = 1;
+    string arguments = 2;
+}
+
+message Responce {
+    string result = 1;
+}
