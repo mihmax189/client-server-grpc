@@ -84,7 +84,7 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 const char descriptor_table_protodef_protocol_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\016protocol.proto\022\010protocol\"A\n\007Request\022#\n"
   "\007command\030\001 \001(\0162\022.protocol.Commands\022\021\n\tar"
-  "guments\030\002 \001(\t\"\032\n\010Responce\022\016\n\006result\030\001 \001("
+  "guments\030\002 \003(\t\"\032\n\010Responce\022\016\n\006result\030\001 \001("
   "\t*v\n\010Commands\022\016\n\nADD_WORKER\020\000\022\020\n\014SHOW_WO"
   "RKERS\020\001\022\r\n\tSHOW_POST\020\002\022\r\n\tSHOW_HEAD\020\003\022\014\n"
   "\010SET_POST\020\004\022\014\n\010SET_HEAD\020\005\022\016\n\nDEL_WORKER\020"
@@ -138,26 +138,22 @@ class Request::_Internal {
 };
 
 Request::Request(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena),
+  arguments_(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
   // @@protoc_insertion_point(arena_constructor:protocol.Request)
 }
 Request::Request(const Request& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      arguments_(from.arguments_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  arguments_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (!from._internal_arguments().empty()) {
-    arguments_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_arguments(),
-      GetArena());
-  }
   command_ = from.command_;
   // @@protoc_insertion_point(copy_constructor:protocol.Request)
 }
 
 void Request::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_Request_protocol_2eproto.base);
-  arguments_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   command_ = 0;
 }
 
@@ -169,7 +165,6 @@ Request::~Request() {
 
 void Request::SharedDtor() {
   GOOGLE_DCHECK(GetArena() == nullptr);
-  arguments_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 void Request::ArenaDtor(void* object) {
@@ -193,7 +188,7 @@ void Request::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  arguments_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  arguments_.Clear();
   command_ = 0;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -214,13 +209,18 @@ const char* Request::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::in
           _internal_set_command(static_cast<::protocol::Commands>(val));
         } else goto handle_unusual;
         continue;
-      // string arguments = 2;
+      // repeated string arguments = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
-          auto str = _internal_mutable_arguments();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "protocol.Request.arguments"));
-          CHK_(ptr);
+          ptr -= 1;
+          do {
+            ptr += 1;
+            auto str = _internal_add_arguments();
+            ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+            CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "protocol.Request.arguments"));
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
         } else goto handle_unusual;
         continue;
       default: {
@@ -258,14 +258,14 @@ failure:
       1, this->_internal_command(), target);
   }
 
-  // string arguments = 2;
-  if (this->arguments().size() > 0) {
+  // repeated string arguments = 2;
+  for (int i = 0, n = this->_internal_arguments_size(); i < n; i++) {
+    const auto& s = this->_internal_arguments(i);
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_arguments().data(), static_cast<int>(this->_internal_arguments().length()),
+      s.data(), static_cast<int>(s.length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
       "protocol.Request.arguments");
-    target = stream->WriteStringMaybeAliased(
-        2, this->_internal_arguments(), target);
+    target = stream->WriteString(2, s, target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -284,11 +284,12 @@ size_t Request::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // string arguments = 2;
-  if (this->arguments().size() > 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_arguments());
+  // repeated string arguments = 2;
+  total_size += 1 *
+      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(arguments_.size());
+  for (int i = 0, n = arguments_.size(); i < n; i++) {
+    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+      arguments_.Get(i));
   }
 
   // .protocol.Commands command = 1;
@@ -328,9 +329,7 @@ void Request::MergeFrom(const Request& from) {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from.arguments().size() > 0) {
-    _internal_set_arguments(from._internal_arguments());
-  }
+  arguments_.MergeFrom(from.arguments_);
   if (from.command() != 0) {
     _internal_set_command(from._internal_command());
   }
@@ -357,7 +356,7 @@ bool Request::IsInitialized() const {
 void Request::InternalSwap(Request* other) {
   using std::swap;
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
-  arguments_.Swap(&other->arguments_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  arguments_.InternalSwap(&other->arguments_);
   swap(command_, other->command_);
 }
 

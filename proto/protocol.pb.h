@@ -217,29 +217,28 @@ class Request PROTOBUF_FINAL :
     kArgumentsFieldNumber = 2,
     kCommandFieldNumber = 1,
   };
-  // string arguments = 2;
-  void clear_arguments();
-  const std::string& arguments() const;
-  void set_arguments(const std::string& value);
-  void set_arguments(std::string&& value);
-  void set_arguments(const char* value);
-  void set_arguments(const char* value, size_t size);
-  std::string* mutable_arguments();
-  std::string* release_arguments();
-  void set_allocated_arguments(std::string* arguments);
-  GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
-  "    string fields are deprecated and will be removed in a"
-  "    future release.")
-  std::string* unsafe_arena_release_arguments();
-  GOOGLE_PROTOBUF_RUNTIME_DEPRECATED("The unsafe_arena_ accessors for"
-  "    string fields are deprecated and will be removed in a"
-  "    future release.")
-  void unsafe_arena_set_allocated_arguments(
-      std::string* arguments);
+  // repeated string arguments = 2;
+  int arguments_size() const;
   private:
-  const std::string& _internal_arguments() const;
-  void _internal_set_arguments(const std::string& value);
-  std::string* _internal_mutable_arguments();
+  int _internal_arguments_size() const;
+  public:
+  void clear_arguments();
+  const std::string& arguments(int index) const;
+  std::string* mutable_arguments(int index);
+  void set_arguments(int index, const std::string& value);
+  void set_arguments(int index, std::string&& value);
+  void set_arguments(int index, const char* value);
+  void set_arguments(int index, const char* value, size_t size);
+  std::string* add_arguments();
+  void add_arguments(const std::string& value);
+  void add_arguments(std::string&& value);
+  void add_arguments(const char* value);
+  void add_arguments(const char* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& arguments() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_arguments();
+  private:
+  const std::string& _internal_arguments(int index) const;
+  std::string* _internal_add_arguments();
   public:
 
   // .protocol.Commands command = 1;
@@ -258,7 +257,7 @@ class Request PROTOBUF_FINAL :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr arguments_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> arguments_;
   int command_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_protocol_2eproto;
@@ -447,85 +446,78 @@ inline void Request::set_command(::protocol::Commands value) {
   // @@protoc_insertion_point(field_set:protocol.Request.command)
 }
 
-// string arguments = 2;
+// repeated string arguments = 2;
+inline int Request::_internal_arguments_size() const {
+  return arguments_.size();
+}
+inline int Request::arguments_size() const {
+  return _internal_arguments_size();
+}
 inline void Request::clear_arguments() {
-  arguments_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  arguments_.Clear();
 }
-inline const std::string& Request::arguments() const {
+inline std::string* Request::add_arguments() {
+  // @@protoc_insertion_point(field_add_mutable:protocol.Request.arguments)
+  return _internal_add_arguments();
+}
+inline const std::string& Request::_internal_arguments(int index) const {
+  return arguments_.Get(index);
+}
+inline const std::string& Request::arguments(int index) const {
   // @@protoc_insertion_point(field_get:protocol.Request.arguments)
-  return _internal_arguments();
+  return _internal_arguments(index);
 }
-inline void Request::set_arguments(const std::string& value) {
-  _internal_set_arguments(value);
-  // @@protoc_insertion_point(field_set:protocol.Request.arguments)
-}
-inline std::string* Request::mutable_arguments() {
+inline std::string* Request::mutable_arguments(int index) {
   // @@protoc_insertion_point(field_mutable:protocol.Request.arguments)
-  return _internal_mutable_arguments();
+  return arguments_.Mutable(index);
 }
-inline const std::string& Request::_internal_arguments() const {
-  return arguments_.Get();
+inline void Request::set_arguments(int index, const std::string& value) {
+  // @@protoc_insertion_point(field_set:protocol.Request.arguments)
+  arguments_.Mutable(index)->assign(value);
 }
-inline void Request::_internal_set_arguments(const std::string& value) {
-  
-  arguments_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
+inline void Request::set_arguments(int index, std::string&& value) {
+  // @@protoc_insertion_point(field_set:protocol.Request.arguments)
+  arguments_.Mutable(index)->assign(std::move(value));
 }
-inline void Request::set_arguments(std::string&& value) {
-  
-  arguments_.Set(
-    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
-  // @@protoc_insertion_point(field_set_rvalue:protocol.Request.arguments)
-}
-inline void Request::set_arguments(const char* value) {
+inline void Request::set_arguments(int index, const char* value) {
   GOOGLE_DCHECK(value != nullptr);
-  
-  arguments_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
-              GetArena());
+  arguments_.Mutable(index)->assign(value);
   // @@protoc_insertion_point(field_set_char:protocol.Request.arguments)
 }
-inline void Request::set_arguments(const char* value,
-    size_t size) {
-  
-  arguments_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
-      reinterpret_cast<const char*>(value), size), GetArena());
+inline void Request::set_arguments(int index, const char* value, size_t size) {
+  arguments_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
   // @@protoc_insertion_point(field_set_pointer:protocol.Request.arguments)
 }
-inline std::string* Request::_internal_mutable_arguments() {
-  
-  return arguments_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+inline std::string* Request::_internal_add_arguments() {
+  return arguments_.Add();
 }
-inline std::string* Request::release_arguments() {
-  // @@protoc_insertion_point(field_release:protocol.Request.arguments)
-  return arguments_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+inline void Request::add_arguments(const std::string& value) {
+  arguments_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:protocol.Request.arguments)
 }
-inline void Request::set_allocated_arguments(std::string* arguments) {
-  if (arguments != nullptr) {
-    
-  } else {
-    
-  }
-  arguments_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), arguments,
-      GetArena());
-  // @@protoc_insertion_point(field_set_allocated:protocol.Request.arguments)
+inline void Request::add_arguments(std::string&& value) {
+  arguments_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:protocol.Request.arguments)
 }
-inline std::string* Request::unsafe_arena_release_arguments() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:protocol.Request.arguments)
-  GOOGLE_DCHECK(GetArena() != nullptr);
-  
-  return arguments_.UnsafeArenaRelease(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-      GetArena());
+inline void Request::add_arguments(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  arguments_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:protocol.Request.arguments)
 }
-inline void Request::unsafe_arena_set_allocated_arguments(
-    std::string* arguments) {
-  GOOGLE_DCHECK(GetArena() != nullptr);
-  if (arguments != nullptr) {
-    
-  } else {
-    
-  }
-  arguments_.UnsafeArenaSetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-      arguments, GetArena());
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:protocol.Request.arguments)
+inline void Request::add_arguments(const char* value, size_t size) {
+  arguments_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:protocol.Request.arguments)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+Request::arguments() const {
+  // @@protoc_insertion_point(field_list:protocol.Request.arguments)
+  return arguments_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+Request::mutable_arguments() {
+  // @@protoc_insertion_point(field_mutable_list:protocol.Request.arguments)
+  return &arguments_;
 }
 
 // -------------------------------------------------------------------
