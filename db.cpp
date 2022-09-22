@@ -3,10 +3,10 @@
 static string resultSqlCommand;
 static int callback(void *udp, int num, char** vals, char** names) {
 	for (int i = 0; i < num; i++) {
-		resultSqlCommand += string(names[i]) + string(" = ") 
+		resultSqlCommand += string(names[i]) + string(" = ")
 			+ string(vals[i] ? vals[i] : "NULL") + string("\n");
 	}
-	std::cerr << "\n";
+	resultSqlCommand += "\n";
 
 	return 0;
 }
